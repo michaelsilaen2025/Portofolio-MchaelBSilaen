@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael B. Silaen — Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1e40af; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
+            --accent: #f59e0b; --dark: #0f172a; --gray: #64748b; --gray-light: #94a3b8;
+            --light: #f8fafc; --white: #ffffff; --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1); --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--dark); background: var(--white); overflow-x: hidden; }
+
+        nav { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 1000; }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .nav-logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .lang-toggle { display: flex; background: var(--light); border-radius: 50px; padding: 3px; border: 1px solid var(--border); }
+        .lang-btn { padding: 5px 12px; border: none; background: transparent; cursor: pointer; border-radius: 50px; font-weight: 600; font-size: 0.8rem; color: var(--gray); transition: all 0.3s; font-family: 'Inter', sans-serif; }
+        .lang-btn.active { background: var(--primary); color: white; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+
+        .hero { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%); position: relative; overflow: hidden; padding-top: 80px; }
+        .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(245,158,11,0.15) 0%, transparent 50%); }
+        .hero-container { max-width: 1280px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: 50px; color: white; font-size: 0.9rem; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.2); }
+        .hero-badge-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        .hero-content h1 { font-size: 3.5rem; color: white; margin-bottom: 1rem; line-height: 1.1; font-weight: 800; }
+        .hero-content .subtitle { font-size: 1.3rem; color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .hero-content p { font-size: 1.05rem; color: rgba(255,255,255,0.85); margin-bottom: 2rem; max-width: 540px; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 0.9rem 1.8rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; border: none; cursor: pointer; }
+        .btn-primary { background: white; color: var(--primary); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .btn-secondary { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.4); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: white; transform: translateY(-3px); }
+        .hero-stats { display: flex; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); }
+        .hero-stat-value { font-size: 1.8rem; font-weight: 700; color: white; }
+        .hero-stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+        .hero-photo { width: 100%; max-width: 380px; aspect-ratio: 3/4; background: rgba(255,255,255,0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; border: 4px solid rgba(255,255,255,0.3); overflow: hidden; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+        section { padding: 6rem 2rem; }
+        .container { max-width: 1280px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-label { display: inline-block; color: var(--primary); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; }
+        .section-title { font-size: 2.5rem; color: var(--dark); font-weight: 800; margin-bottom: 1rem; }
+        .section-subtitle { color: var(--gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        .about { background: var(--light); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-text p { font-size: 1.05rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.8; }
+        .about-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+        .info-item { background: white; padding: 1rem 1.2rem; border-radius: 12px; border-left: 3px solid var(--primary); }
+        .info-label { font-size: 0.8rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 1px; }
+        .info-value { font-weight: 600; color: var(--dark); margin-top: 0.2rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .stat-card { background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid var(--border); }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .stat-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-bottom: 1rem; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: var(--dark); margin-bottom: 0.3rem; }
+        .stat-label { color: var(--gray); font-size: 0.9rem; }
+
+        .project-card { background: white; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-lg); margin-bottom: 3rem; border: 1px solid var(--border); }
+        .project-image { width: 100%; height: 450px; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .project-image img { width: 100%; height: 100%; object-fit: cover; }
+        .project-content { padding: 3rem; }
+        .project-tag { display: inline-block; background: rgba(30,64,175,0.1); color: var(--primary); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; }
+        .project-content h3 { font-size: 2rem; margin-bottom: 1rem; color: var(--dark); font-weight: 700; }
+        .project-content > p { color: var(--gray); font-size: 1.05rem; margin-bottom: 2rem; line-height: 1.8; }
+        .project-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+        .spec-item { background: var(--light); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); transition: all 0.3s; }
+        .spec-item:hover { transform: translateX(5px); box-shadow: var(--shadow); }
+        .spec-item h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 0.95rem; font-weight: 700; }
+        .spec-item p { color: var(--gray); font-size: 0.9rem; margin: 0; line-height: 1.5; }
+        .project-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .result-card { text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 12px; }
+        .result-number { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; }
+        .result-label { color: var(--gray); font-size: 0.85rem; }
+
+        .project-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .gallery-item { background: var(--light); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); transition: all 0.3s; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .gallery-image { width: 100%; height: 240px; background: linear-gradient(135deg, #3b82f6, #1e40af); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .gallery-image img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-caption { padding: 1rem 1.2rem; }
+        .gallery-caption h4 { color: var(--dark); font-size: 0.95rem; margin-bottom: 0.3rem; }
+        .gallery-caption p { color: var(--gray); font-size: 0.85rem; }
+
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .mini-project { background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s; }
+        .mini-project:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+        .mini-project-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-bottom: 1rem; }
+        .mini-project h4 { color: var(--dark); margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .mini-project p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
+
+        .experience { background: var(--light); }
+        .timeline { position: relative; max-width: 900px; margin: 0 auto; }
+        .timeline::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 2px; height: 100%; background: linear-gradient(to bottom, var(--primary), var(--primary-light)); }
+        .timeline-item { margin-bottom: 3rem; position: relative; }
+        .timeline-item:nth-child(odd) .timeline-content { margin-left: auto; margin-right: 55%; text-align: right; }
+        .timeline-item:nth-child(even) .timeline-content { margin-left: 55%; }
+        .timeline-content { background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow); width: 45%; border: 1px solid var(--border); }
+        .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 4px solid white; box-shadow: 0 0 0 4px rgba(30,64,175,0.2); }
+        .timeline-date { display: inline-block; background: rgba(30,64,175,0.1); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.8rem; }
+        .timeline-content h3 { color: var(--dark); margin-bottom: 0.3rem; font-size: 1.2rem; }
+        .timeline-content .company { color: var(--primary); font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem; }
+        .timeline-content ul { list-style: none; padding: 0; }
+        .timeline-content ul li { color: var(--gray); margin-bottom: 0.5rem; position: relative; padding-left: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+        .timeline-item:nth-child(odd) .timeline-content ul li { padding-left: 0; padding-right: 1.5rem; }
+        .timeline-content ul li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+        .timeline-item:nth-child(odd) .timeline-content ul li::before { left: auto; right: 0; }
+
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .skill-category { background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); transition: all 0.3s; }
+        .skill-category:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .skill-category-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
+        .skill-category-icon { width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+        .skill-category h3 { color: var(--dark); font-size: 1.1rem; }
+        .skill-item { margin-bottom: 1.2rem; }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .skill-name { font-weight: 500; color: var(--dark); font-size: 0.95rem; }
+        .skill-level { color: var(--gray); font-size: 0.85rem; font-weight: 600; }
+        .skill-bar { height: 8px; background: var(--light); border-radius: 10px; overflow: hidden; }
+        .skill-progress { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 10px; transition: width 1.5s ease; }
+
+        .education { background: var(--light); }
+        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .edu-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); transition: all 0.3s; }
+        .edu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .edu-card-image { width: 100%; height: 220px; background: linear-gradient(135deg, #1e40af, #3b82f6); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .edu-card-image img { width: 100%; height: 100%; object-fit: cover; }
+        .edu-card-body { padding: 1.5rem; }
+        .edu-card-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-bottom: 1rem; }
+        .edu-card h3 { color: var(--dark); margin-bottom: 0.5rem; font-size: 1.15rem; }
+        .edu-card .institution { color: var(--primary); font-weight: 600; margin-bottom: 0.3rem; }
+        .edu-card .year { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+        .edu-card p { color: var(--gray); line-height: 1.6; font-size: 0.95rem; }
+
+        .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-info h3 { font-size: 2rem; margin-bottom: 1rem; color: var(--dark); }
+        .contact-info > p { color: var(--gray); margin-bottom: 2rem; line-height: 1.8; }
+        .contact-details { list-style: none; }
+        .contact-details li { display: flex; align-items: center; margin-bottom: 1.2rem; gap: 1rem; }
+        .contact-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; flex-shrink: 0; }
+        .contact-details strong { display: block; color: var(--dark); font-size: 0.9rem; }
+        .contact-details a, .contact-details span { color: var(--gray); font-size: 0.95rem; text-decoration: none; transition: color 0.3s; }
+        .contact-details a:hover { color: var(--primary); }
+        .contact-form { background: var(--light); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); }
+        .form-group { margin-bottom: 1.3rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--dark); font-weight: 500; font-size: 0.9rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.9rem 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: all 0.3s; background: white; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,64,175,0.1); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .submit-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: 'Inter', sans-serif; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(30,64,175,0.3); }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 2rem; }
+        footer p { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .footer-social { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
+        .footer-social a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s; }
+        .footer-social a:hover { background: var(--primary); transform: translateY(-3px); }
+
+        @media (max-width: 968px) {
+            .hero-container, .about-grid, .contact-content { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 1.5rem; box-shadow: var(--shadow-lg); gap: 1rem; }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .timeline::before { left: 20px; }
+            .timeline-item:nth-child(odd) .timeline-content, .timeline-item:nth-child(even) .timeline-content { margin-left: 60px; margin-right: 0; text-align: left; width: calc(100% - 60px); }
+            .timeline-item:nth-child(odd) .timeline-content ul li { padding-left: 1.5rem; padding-right: 0; }
+            .timeline-item:nth-child(odd) .timeline-content ul li::before { left: 0; right: auto; }
+            .timeline-dot { left: 20px; }
+            .section-title { font-size: 2rem; }
+            .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+        }
+        @media (max-width: 640px) {
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content .subtitle { font-size: 1.1rem; }
+            .hero-buttons { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .about-info { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .project-content { padding: 2rem 1.5rem; }
+            .project-content h3 { font-size: 1.5rem; }
+            section { padding: 4rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon">M</div>
+                <span>Michael B. Silaen</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" data-i18n="nav.about">Tentang</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Proyek</a></li>
+                <li><a href="#experience" data-i18n="nav.experience">Pengalaman</a></li>
+                <li><a href="#skills" data-i18n="nav.skills">Keahlian</a></li>
+                <li><a href="#education" data-i18n="nav.education">Pendidikan</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Kontak</a></li>
+                <li>
+                    <div class="lang-toggle">
+                        <button class="lang-btn active" data-lang="id">ID</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                    </div>
+                </li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span data-i18n="hero.badge">Tersedia untuk peluang kerja</span>
+                </div>
+                <h1 data-i18n="hero.title">Michael B. Silaen</h1>
+                <p class="subtitle" data-i18n="hero.subtitle">Lulusan Teknik Elektro | PLC & Otomasi Industri</p>
+                <p data-i18n="hero.description">Saya memprogram PLC, merakit panel kontrol dan daya, serta membangun sistem pneumatik. Saya memiliki 9 bulan pengalaman magang dan Diploma III dari Politeknik Negeri Medan.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary"><span data-i18n="hero.cta1">Lihat Proyek Akhir</span> →</a>
+                    <a href="mailto:micael05silaen@gmail.com" class="btn btn-secondary">✉ <span data-i18n="hero.cta2">Kirim Email</span></a>
+                </div>
+                <div class="hero-stats">
+                    <div><div class="hero-stat-value">9</div><div class="hero-stat-label" data-i18n="hero.stat1">Bulan Magang</div></div>
+                    <div><div class="hero-stat-value">3.24</div><div class="hero-stat-label" data-i18n="hero.stat2">IPK / 4.00</div></div>
+                    <div><div class="hero-stat-value">4+</div><div class="hero-stat-label" data-i18n="hero.stat3">Proyek Teknik</div></div>
+                </div>
+            </div>
+            <div class="hero-photo">
+                <img src="Picture 8.jpg" alt="Foto Profil Michael B. Silaen">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="about.label">Tentang Saya</span>
+                <h2 class="section-title" data-i18n="about.title">Siapa Saya</h2>
+                <p class="section-subtitle" data-i18n="about.subtitle">Lulusan Teknik Elektro dengan passion di otomasi industri</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p data-i18n="about.p1">Saya Michael, lulusan Diploma III Teknik Elektro (Elektronika) dari Politeknik Negeri Medan, berbasis di Toba, Sumatera Utara.</p>
+                    <p data-i18n="about.p2">Pekerjaan saya sejauh ini mencakup pemrograman PLC Omron dan Outseal, diagram ladder, aktuator pneumatik, dan diagram pengkabelan listrik. Saya mencari peran dalam pemrograman PLC, pemeliharaan listrik, atau otomasi industri.</p>
+                    <div class="about-info">
+                        <div class="info-item"><div class="info-label" data-i18n="about.loc">Lokasi</div><div class="info-value">Toba, Sumut</div></div>
+                        <div class="info-item"><div class="info-label" data-i18n="about.edu">Pendidikan</div><div class="info-value">D3 Elektro</div></div>
+                        <div class="info-item"><div class="info-label" data-i18n="about.exp">Pengalaman</div><div class="info-value">9 Bulan</div></div>
+                        <div class="info-item"><div class="info-label" data-i18n="about.gpa">IPK</div><div class="info-value">3.24 / 4.00</div></div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-number">9</div>
+                        <div class="stat-label" data-i18n="stat.internship">Bulan Magang</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label" data-i18n="stat.success">Tingkat Keberhasilan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-number">3.24</div>
+                        <div class="stat-label" data-i18n="stat.gpa">IPK / 4.00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔧</div>
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label" data-i18n="stat.projects">Proyek Teknik</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="projects.label">Proyek Akhir</span>
+                <h2 class="section-title" data-i18n="projects.title">Sistem Penyortiran Berbasis PLC</h2>
+                <p class="section-subtitle" data-i18n="projects.subtitle">Rancang bangun sistem pneumatik pada penyortiran barang</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Picture 2.jpg" alt="Sistem Penyortiran Berbasis PLC">
+                </div>
+                <div class="project-content">
+                    <span class="project-tag" data-i18n="project.tag">Proyek Akhir • 2026</span>
+                    <h3 data-i18n="project.title">Sistem Penyortiran Barang Pneumatik Berbasis PLC</h3>
+                    <p data-i18n="project.desc">Proyek akhir saya di Politeknik Negeri Medan. Sebuah konveyor membawa kubus berwarna melewati dua sensor warna, dan PLC menggerakkan silinder pneumatik yang mendorong setiap kubus ke jalurnya sendiri. Dibangun sebagai unit pelatihan untuk kelas otomasi industri.</p>
+                    
+                    <div class="project-specs">
+                        <div class="spec-item">
+                            <h4 data-i18n="project.spec1.title">Kontroler</h4>
+                            <p data-i18n="project.spec1.desc">PLC Omron CP1E-N40DR-D, diprogram dengan diagram ladder menggunakan CX-Programmer</p>
+                        </div>
+                        <div class="spec-item">
+                            <h4 data-i18n="project.spec2.title">Aktuasi</h4>
+                            <p data-i18n="project.spec2.desc">Dua katup solenoid AIRTAC 5/2 double-coil dan dua silinder double-acting MAL 16×50</p>
+                        </div>
+                        <div class="spec-item">
+                            <h4 data-i18n="project.spec3.title">Sumber Udara</h4>
+                            <p data-i18n="project.spec3.desc">Kompresor oil-less Zehn dengan unit FRL dan kontrol aliran udara</p>
+                        </div>
+                        <div class="spec-item">
+                            <h4 data-i18n="project.spec4.title">Sensing</h4>
+                            <p data-i18n="project.spec4.desc">Sensor warna TCS3200 dibaca oleh Arduino Uno, yang memberi sinyal ke PLC melalui relay</p>
+                        </div>
+                        <div class="spec-item">
+                            <h4 data-i18n="project.spec5.title">Antarmuka</h4>
+                            <p data-i18n="project.spec5.desc">HMI Omron NB7W-TW00B, lampu pilot dan tombol push button pada pintu panel</p>
+                        </div>
+                    </div>
+
+                    <div class="project-results">
+                        <div class="result-card"><div class="result-number">10/10</div><div class="result-label" data-i18n="project.r1">Tes Output PLC Lulus</div></div>
+                        <div class="result-card"><div class="result-number">10/10</div><div class="result-label" data-i18n="project.r2">Penyortiran Benar</div></div>
+                        <div class="result-card"><div class="result-number">116.6 N</div><div class="result-label" data-i18n="project.r3">Gaya Dorong (5.8 bar)</div></div>
+                        <div class="result-card"><div class="result-number">100%</div><div class="result-label" data-i18n="project.r4">Tingkat Keberhasilan</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="text-align:center;margin-bottom:2rem;color:var(--dark);font-size:1.5rem;" data-i18n="gallery.title">Galeri Proyek</h3>
+            <div class="project-gallery">
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="Picture 6.jpg" alt="Panel Kontrol Tampak Depan">
+                    </div>
+                    <div class="gallery-caption">
+                        <h4 data-i18n="gallery.p1.title">Panel Kontrol - Tampak Depan</h4>
+                        <p data-i18n="gallery.p1.desc">HMI Omron NB7W-TW00B, lampu pilot, dan tombol operasi</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="Picture 5.jpg" alt="Panel Kontrol Tampak Dalam">
+                    </div>
+                    <div class="gallery-caption">
+                        <h4 data-i18n="gallery.p2.title">Panel Kontrol - Tampak Dalam</h4>
+                        <p data-i18n="gallery.p2.desc">PLC Omron, power supply, Arduino, relay, dan terminal block</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="Picture 2.jpg" alt="Panel Pneumatik">
+                    </div>
+                    <div class="gallery-caption">
+                        <h4 data-i18n="gallery.p3.title">Panel Pneumatik</h4>
+                        <p data-i18n="gallery.p3.desc">FRL unit, solenoid valve AIRTAC, dan selang pneumatik biru</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="Picture 3.jpg" alt="Konveyor dengan Sensor">
+                    </div>
+                    <div class="gallery-caption">
+                        <h4 data-i18n="gallery.p4.title">Konveyor Belt System</h4>
+                        <p data-i18n="gallery.p4.desc">Conveyor dengan sensor TCS3200, proximity sensor, dan silinder pneumatik</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="Picture 9.jpg" alt="Proses Pembuatan">
+                    </div>
+                    <div class="gallery-caption">
+                        <h4 data-i18n="gallery.p5.title">Proses Pembuatan</h4>
+                        <p data-i18n="gallery.p5.desc">Perakitan rangka aluminium profil bersama tim</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="Picture 7.jpg" alt="Sidang Tugas Akhir">
+                    </div>
+                    <div class="gallery-caption">
+                        <h4 data-i18n="gallery.p7.title">Sidang Tugas Akhir</h4>
+                        <p data-i18n="gallery.p7.desc">Presentasi proyek akhir di depan dewan penguji Politeknik Negeri Medan</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="text-align:center;margin:4rem 0 2rem;color:var(--dark);font-size:1.5rem;" data-i18n="otherProjects.title">Proyek Lainnya</h3>
+            <div class="projects-grid">
+                <div class="mini-project">
+                    <div class="mini-project-icon">💧</div>
+                    <h4 data-i18n="op1.title">Detektor Kualitas Air Toren</h4>
+                    <p data-i18n="op1.desc">Sistem monitoring kualitas air menggunakan sensor turbidity dan clarity, dengan indikator peringatan otomatis.</p>
+                </div>
+                <div class="mini-project">
+                    <div class="mini-project-icon">🔧</div>
+                    <h4 data-i18n="op2.title">Trainer Sistem Pneumatik</h4>
+                    <p data-i18n="op2.desc">Alat peraga lengkap dengan aktuator, valve, dan rangkaian kontrol pneumatik untuk pembelajaran.</p>
+                </div>
+                <div class="mini-project">
+                    <div class="mini-project-icon">🚦</div>
+                    <h4 data-i18n="op3.title">Trainer Lampu Lalu Lintas</h4>
+                    <p data-i18n="op3.desc">Simulator lampu lalu lintas 4 arah dan 3 arah berbasis PLC dengan diagram pengkabelan lengkap.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="exp.label">Pengalaman</span>
+                <h2 class="section-title" data-i18n="exp.title">Perjalanan Karir</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Jan - Mar 2026</span>
+                        <h3 data-i18n="exp1.title">Magang</h3>
+                        <div class="company">CV A. B. Electronics • 3 Bulan</div>
+                        <ul>
+                            <li data-i18n="exp1.l1">Merancang dan menguji sistem kendali pneumatik berbasis PLC menggunakan alat trainer</li>
+                            <li data-i18n="exp1.l2">Memprogram PLC Omron CP1E dengan CX-Programmer untuk kontrol sequential</li>
+                            <li data-i18n="exp1.l3">Melakukan wiring, konfigurasi I/O, dan troubleshooting sistem</li>
+                            <li data-i18n="exp1.l4">Membantu instalasi dan pengkabelan sistem kontrol motor tiga fase</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2026</span>
+                        <h3 data-i18n="exp2.title">Proyek Akhir</h3>
+                        <div class="company" data-i18n="exp2.company">Politeknik Negeri Medan</div>
+                        <ul>
+                            <li data-i18n="exp2.l1">Merancang dan membangun sistem penyortiran otomatis berbasis PLC Omron</li>
+                            <li data-i18n="exp2.l2">Mengintegrasikan sistem pneumatik (AIRTAC 5/2 + MAL 16×50) dengan kontrol PLC</li>
+                            <li data-i18n="exp2.l3">Melakukan pengujian sistem dengan tingkat keberhasilan 100% (10/10 tes)</li>
+                            <li data-i18n="exp2.l4">Mendokumentasikan hasil dalam laporan teknis komprehensif</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024-2025</span>
+                        <h3 data-i18n="exp3.title">Proyek Pengembangan</h3>
+                        <div class="company" data-i18n="exp3.company">Politeknik Negeri Medan</div>
+                        <ul>
+                            <li data-i18n="exp3.l1">Perangkat Deteksi Kualitas Air untuk Toren</li>
+                            <li data-i18n="exp3.l2">Trainer Sistem Pneumatik</li>
+                            <li data-i18n="exp3.l3">Trainer Sistem Lampu Lalu Lintas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="skills.label">Keahlian</span>
+                <h2 class="section-title" data-i18n="skills.title">Kompetensi Teknis</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">⚡</div>
+                        <h3 data-i18n="sk1.title">PLC & Otomasi</h3>
+                    </div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">Omron CP1E-N40DR-D</span><span class="skill-level">90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">Outseal PLC</span><span class="skill-level">85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk1.ladder">Diagram Ladder</span><span class="skill-level">95%</span></div><div class="skill-bar"><div class="skill-progress" style="width:95%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">CX-Programmer</span><span class="skill-level">90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">🔧</div>
+                        <h3 data-i18n="sk2.title">Sistem Pneumatik</h3>
+                    </div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk2.v1">Katup Solenoid 5/2</span><span class="skill-level">95%</span></div><div class="skill-bar"><div class="skill-progress" style="width:95%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk2.v2">Silinder Double-Acting</span><span class="skill-level">90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk2.v3">Rangkaian Kontrol</span><span class="skill-level">88%</span></div><div class="skill-bar"><div class="skill-progress" style="width:88%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk2.v4">Regulasi Tekanan</span><span class="skill-level">85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">🔌</div>
+                        <h3 data-i18n="sk3.title">Sistem Listrik</h3>
+                    </div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk3.v1">Pengkabelan Panel</span><span class="skill-level">92%</span></div><div class="skill-bar"><div class="skill-progress" style="width:92%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk3.v2">Diagram Pengkabelan</span><span class="skill-level">90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk3.v3">Kontrol Motor 3 Fase</span><span class="skill-level">85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk3.v4">Relay & Kontaktor</span><span class="skill-level">88%</span></div><div class="skill-bar"><div class="skill-progress" style="width:88%"></div></div></div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">💡</div>
+                        <h3 data-i18n="sk4.title">Lainnya</h3>
+                    </div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">Arduino</span><span class="skill-level">80%</span></div><div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk4.v2">Sensor</span><span class="skill-level">85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">HMI Omron</span><span class="skill-level">75%</span></div><div class="skill-bar"><div class="skill-progress" style="width:75%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name" data-i18n="sk4.v4">Perancangan Trainer</span><span class="skill-level">90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="edu.label">Pendidikan & Sertifikasi</span>
+                <h2 class="section-title" data-i18n="edu.title">Latar Belakang</h2>
+            </div>
+            <div class="edu-grid">
+                <div class="edu-card">
+                    <div class="edu-card-image">
+                        <img src="Picture 10.jpg" alt="Politeknik Negeri Medan">
+                    </div>
+                    <div class="edu-card-body">
+                        <div class="edu-card-icon">🎓</div>
+                        <h3 data-i18n="edu1.title">Diploma III Teknik Elektro</h3>
+                        <div class="institution">Politeknik Negeri Medan</div>
+                        <div class="year">2023 – 2026</div>
+                        <p data-i18n="edu1.desc">Konsentrasi: Elektronika<br>IPK: 3.24 / 4.00<br>NIM: 2305042048</p>
+                    </div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-image">
+                        <img src="Picture 4.jpg" alt="Uji Kompetensi LSP">
+                    </div>
+                    <div class="edu-card-body">
+                        <div class="edu-card-icon">📜</div>
+                        <h3 data-i18n="edu2.title">Sertifikasi LSP Pemeliharaan Listrik (JE)</h3>
+                        <div class="institution" data-i18n="edu2.inst">LSP Politeknik Negeri Medan</div>
+                        <div class="year">2026</div>
+                        <p data-i18n="edu2.desc">Dinyatakan kompeten dalam asesmen kompetensi skema sertifikasi Electrical. Sertifikat dalam proses penerbitan.</p>
+                    </div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-image">
+                        <img src="Picture 8.jpg" alt="Sertifikat Bahasa">
+                    </div>
+                    <div class="edu-card-body">
+                        <div class="edu-card-icon">🌐</div>
+                        <h3 data-i18n="edu3.title">Bahasa</h3>
+                        <div class="institution" data-i18n="edu3.inst">Kemampuan Bahasa</div>
+                        <div class="year" data-i18n="edu3.year">Aktif</div>
+                        <p><strong data-i18n="edu3.id">Indonesia:</strong> <span data-i18n="edu3.idLevel">Bahasa Ibu (Aktif)</span><br><strong data-i18n="edu3.en">Inggris:</strong> <span data-i18n="edu3.enLevel">Dasar (Pasif)</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="contact.label">Kontak</span>
+                <h2 class="section-title" data-i18n="contact.title">Mari Terhubung</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 data-i18n="contact.heading">Tertarik Bekerja Sama?</h3>
+                    <p data-i18n="contact.desc">Saya terbuka untuk peran dalam pemrograman PLC, pemeliharaan listrik, dan otomasi industri. Jangan ragu untuk menghubungi saya.</p>
+                    <ul class="contact-details">
+                        <li>
+                            <div class="contact-icon">📧</div>
+                            <div><strong>Email</strong><a href="mailto:micael05silaen@gmail.com">micael05silaen@gmail.com</a></div>
+                        </li>
+                        <li>
+                            <div class="contact-icon">💼</div>
+                            <div><strong>LinkedIn</strong><a href="https://www.linkedin.com/in/michael-b-silaen-47a795443" target="_blank">linkedin.com/in/michael-b-silaen</a></div>
+                        </li>
+                        <li>
+                            <div class="contact-icon">📱</div>
+                            <div><strong data-i18n="contact.phone">Telepon</strong><a href="tel:+6285764117251">+62 857-6411-7251</a></div>
+                        </li>
+                        <li>
+                            <div class="contact-icon">📍</div>
+                            <div><strong data-i18n="contact.location">Lokasi</strong><span>Toba, Sumatera Utara, Indonesia</span></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group"><label for="name" data-i18n="form.name">Nama</label><input type="text" id="name" required></div>
+                        <div class="form-group"><label for="email">Email</label><input type="email" id="email" required></div>
+                        <div class="form-group"><label for="subject" data-i18n="form.subject">Subjek</label><input type="text" id="subject" required></div>
+                        <div class="form-group"><label for="message" data-i18n="form.message">Pesan</label><textarea id="message" required></textarea></div>
+                        <button type="submit" class="submit-btn" data-i18n="form.submit">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-social">
+            <a href="mailto:micael05silaen@gmail.com">✉</a>
+            <a href="https://www.linkedin.com/in/michael-b-silaen-47a795443" target="_blank">in</a>
+            <a href="tel:+6285764117251">📱</a>
+        </div>
+        <p>© 2026 Michael B. Silaen. <span data-i18n="footer.rights">Semua Hak Dilindungi.</span></p>
+    </footer>
+
+    <script>
+        const translations = {
+            id: {
+                'nav.about': 'Tentang', 'nav.projects': 'Proyek', 'nav.experience': 'Pengalaman',
+                'nav.skills': 'Keahlian', 'nav.education': 'Pendidikan', 'nav.contact': 'Kontak',
+                'hero.badge': 'Tersedia untuk peluang kerja', 'hero.title': 'Michael B. Silaen',
+                'hero.subtitle': 'Lulusan Teknik Elektro | PLC & Otomasi Industri',
+                'hero.description': 'Saya memprogram PLC, merakit panel kontrol dan daya, serta membangun sistem pneumatik. Saya memiliki 9 bulan pengalaman magang dan Diploma III dari Politeknik Negeri Medan.',
+                'hero.cta1': 'Lihat Proyek Akhir', 'hero.cta2': 'Kirim Email',
+                'hero.stat1': 'Bulan Magang', 'hero.stat2': 'IPK / 4.00', 'hero.stat3': 'Proyek Teknik',
+                'about.label': 'Tentang Saya', 'about.title': 'Siapa Saya',
+                'about.subtitle': 'Lulusan Teknik Elektro dengan passion di otomasi industri',
+                'about.p1': 'Saya Michael, lulusan Diploma III Teknik Elektro (Elektronika) dari Politeknik Negeri Medan, berbasis di Toba, Sumatera Utara.',
+                'about.p2': 'Pekerjaan saya sejauh ini mencakup pemrograman PLC Omron dan Outseal, diagram ladder, aktuator pneumatik, dan diagram pengkabelan listrik. Saya mencari peran dalam pemrograman PLC, pemeliharaan listrik, atau otomasi industri.',
+                'about.loc': 'Lokasi', 'about.edu': 'Pendidikan', 'about.exp': 'Pengalaman', 'about.gpa': 'IPK',
+                'stat.internship': 'Bulan Magang', 'stat.success': 'Tingkat Keberhasilan',
+                'stat.gpa': 'IPK / 4.00', 'stat.projects': 'Proyek Teknik',
+                'projects.label': 'Proyek Akhir', 'projects.title': 'Sistem Penyortiran Berbasis PLC',
+                'projects.subtitle': 'Rancang bangun sistem pneumatik pada penyortiran barang',
+                'project.tag': 'Proyek Akhir • 2026',
+                'project.title': 'Sistem Penyortiran Barang Pneumatik Berbasis PLC',
+                'project.desc': 'Proyek akhir saya di Politeknik Negeri Medan. Sebuah konveyor membawa kubus berwarna melewati dua sensor warna, dan PLC menggerakkan silinder pneumatik yang mendorong setiap kubus ke jalurnya sendiri. Dibangun sebagai unit pelatihan untuk kelas otomasi industri.',
+                'project.spec1.title': 'Kontroler', 'project.spec1.desc': 'PLC Omron CP1E-N40DR-D, diprogram dengan diagram ladder menggunakan CX-Programmer',
+                'project.spec2.title': 'Aktuasi', 'project.spec2.desc': 'Dua katup solenoid AIRTAC 5/2 double-coil dan dua silinder double-acting MAL 16×50',
+                'project.spec3.title': 'Sumber Udara', 'project.spec3.desc': 'Kompresor oil-less Zehn dengan unit FRL dan kontrol aliran udara',
+                'project.spec4.title': 'Sensing', 'project.spec4.desc': 'Sensor warna TCS3200 dibaca oleh Arduino Uno, yang memberi sinyal ke PLC melalui relay',
+                'project.spec5.title': 'Antarmuka', 'project.spec5.desc': 'HMI Omron NB7W-TW00B, lampu pilot dan tombol push button pada pintu panel',
+                'project.r1': 'Tes Output PLC Lulus', 'project.r2': 'Penyortiran Benar',
+                'project.r3': 'Gaya Dorong (5.8 bar)', 'project.r4': 'Tingkat Keberhasilan',
+                'gallery.title': 'Galeri Proyek',
+                'gallery.p1.title': 'Panel Kontrol - Tampak Depan', 'gallery.p1.desc': 'HMI Omron NB7W-TW00B, lampu pilot, dan tombol operasi',
+                'gallery.p2.title': 'Panel Kontrol - Tampak Dalam', 'gallery.p2.desc': 'PLC Omron, power supply, Arduino, relay, dan terminal block',
+                'gallery.p3.title': 'Panel Pneumatik', 'gallery.p3.desc': 'FRL unit, solenoid valve AIRTAC, dan selang pneumatik biru',
+                'gallery.p4.title': 'Konveyor Belt System', 'gallery.p4.desc': 'Conveyor dengan sensor TCS3200, proximity sensor, dan silinder pneumatik',
+                'gallery.p5.title': 'Proses Pembuatan', 'gallery.p5.desc': 'Perakitan rangka aluminium profil bersama tim',
+                'gallery.p7.title': 'Sidang Tugas Akhir', 'gallery.p7.desc': 'Presentasi proyek akhir di depan dewan penguji Politeknik Negeri Medan',
+                'otherProjects.title': 'Proyek Lainnya',
+                'op1.title': 'Detektor Kualitas Air Toren', 'op1.desc': 'Sistem monitoring kualitas air menggunakan sensor turbidity dan clarity, dengan indikator peringatan otomatis.',
+                'op2.title': 'Trainer Sistem Pneumatik', 'op2.desc': 'Alat peraga lengkap dengan aktuator, valve, dan rangkaian kontrol pneumatik untuk pembelajaran.',
+                'op3.title': 'Trainer Lampu Lalu Lintas', 'op3.desc': 'Simulator lampu lalu lintas 4 arah dan 3 arah berbasis PLC dengan diagram pengkabelan lengkap.',
+                'exp.label': 'Pengalaman', 'exp.title': 'Perjalanan Karir',
+                'exp1.title': 'Magang', 'exp1.l1': 'Merancang dan menguji sistem kendali pneumatik berbasis PLC menggunakan alat trainer',
+                'exp1.l2': 'Memprogram PLC Omron CP1E dengan CX-Programmer untuk kontrol sequential',
+                'exp1.l3': 'Melakukan wiring, konfigurasi I/O, dan troubleshooting sistem',
+                'exp1.l4': 'Membantu instalasi dan pengkabelan sistem kontrol motor tiga fase',
+                'exp2.title': 'Proyek Akhir', 'exp2.company': 'Politeknik Negeri Medan',
+                'exp2.l1': 'Merancang dan membangun sistem penyortiran otomatis berbasis PLC Omron',
+                'exp2.l2': 'Mengintegrasikan sistem pneumatik (AIRTAC 5/2 + MAL 16×50) dengan kontrol PLC',
+                'exp2.l3': 'Melakukan pengujian sistem dengan tingkat keberhasilan 100% (10/10 tes)',
+                'exp2.l4': 'Mendokumentasikan hasil dalam laporan teknis komprehensif',
+                'exp3.title': 'Proyek Pengembangan', 'exp3.company': 'Politeknik Negeri Medan',
+                'exp3.l1': 'Perangkat Deteksi Kualitas Air untuk Toren',
+                'exp3.l2': 'Trainer Sistem Pneumatik', 'exp3.l3': 'Trainer Sistem Lampu Lalu Lintas',
+                'skills.label': 'Keahlian', 'skills.title': 'Kompetensi Teknis',
+                'sk1.title': 'PLC & Otomasi', 'sk1.ladder': 'Diagram Ladder',
+                'sk2.title': 'Sistem Pneumatik', 'sk2.v1': 'Katup Solenoid 5/2',
+                'sk2.v2': 'Silinder Double-Acting', 'sk2.v3': 'Rangkaian Kontrol', 'sk2.v4': 'Regulasi Tekanan',
+                'sk3.title': 'Sistem Listrik', 'sk3.v1': 'Pengkabelan Panel',
+                'sk3.v2': 'Diagram Pengkabelan', 'sk3.v3': 'Kontrol Motor 3 Fase', 'sk3.v4': 'Relay & Kontaktor',
+                'sk4.title': 'Lainnya', 'sk4.v2': 'Sensor', 'sk4.v4': 'Perancangan Trainer',
+                'edu.label': 'Pendidikan & Sertifikasi', 'edu.title': 'Latar Belakang',
+                'edu1.title': 'Diploma III Teknik Elektro',
+                'edu1.desc': 'Konsentrasi: Elektronika<br>IPK: 3.24 / 4.00<br>NIM: 2305042048',
+                'edu2.title': 'Sertifikasi LSP Pemeliharaan Listrik (JE)',
+                'edu2.inst': 'LSP Politeknik Negeri Medan',
+                'edu2.desc': 'Dinyatakan kompeten dalam asesmen kompetensi skema sertifikasi Electrical. Sertifikat dalam proses penerbitan.',
+                'edu3.title': 'Bahasa', 'edu3.inst': 'Kemampuan Bahasa', 'edu3.year': 'Aktif',
+                'edu3.id': 'Indonesia:', 'edu3.idLevel': 'Bahasa Ibu (Aktif)',
+                'edu3.en': 'Inggris:', 'edu3.enLevel': 'Dasar (Pasif)',
+                'contact.label': 'Kontak', 'contact.title': 'Mari Terhubung',
+                'contact.heading': 'Tertarik Bekerja Sama?',
+                'contact.desc': 'Saya terbuka untuk peran dalam pemrograman PLC, pemeliharaan listrik, dan otomasi industri. Jangan ragu untuk menghubungi saya.',
+                'contact.phone': 'Telepon', 'contact.location': 'Lokasi',
+                'form.name': 'Nama', 'form.subject': 'Subjek', 'form.message': 'Pesan', 'form.submit': 'Kirim Pesan',
+                'footer.rights': 'Semua Hak Dilindungi.'
+            },
+            en: {
+                'nav.about': 'About', 'nav.projects': 'Projects', 'nav.experience': 'Experience',
+                'nav.skills': 'Skills', 'nav.education': 'Education', 'nav.contact': 'Contact',
+                'hero.badge': 'Available for opportunities', 'hero.title': 'Michael B. Silaen',
+                'hero.subtitle': 'Electrical Engineering Graduate | PLC & Industrial Automation',
+                'hero.description': 'I program PLCs, wire control and power panels, and build pneumatic systems. I have 9 months of internship experience and a Diploma III from Politeknik Negeri Medan.',
+                'hero.cta1': 'See Final Project', 'hero.cta2': 'Send Email',
+                'hero.stat1': 'Months Internship', 'hero.stat2': 'GPA / 4.00', 'hero.stat3': 'Technical Projects',
+                'about.label': 'About Me', 'about.title': 'Who I Am',
+                'about.subtitle': 'Electrical Engineering graduate with passion in industrial automation',
+                'about.p1': "I'm Michael, a Diploma III graduate in Electrical Engineering (Electronics) from Politeknik Negeri Medan, based in Toba, North Sumatra.",
+                'about.p2': 'My work so far has covered Omron and Outseal PLC programming, ladder diagrams, pneumatic actuators, and electrical wiring diagrams. I\'m looking for a role in PLC programming, electrical maintenance, or industrial automation.',
+                'about.loc': 'Location', 'about.edu': 'Education', 'about.exp': 'Experience', 'about.gpa': 'GPA',
+                'stat.internship': 'Months Internship', 'stat.success': 'Success Rate',
+                'stat.gpa': 'GPA / 4.00', 'stat.projects': 'Technical Projects',
+                'projects.label': 'Final Project', 'projects.title': 'PLC-Based Sorting System',
+                'projects.subtitle': 'Design and build of pneumatic goods sorting system',
+                'project.tag': 'Final Project • 2026',
+                'project.title': 'PLC-Based Pneumatic Goods Sorting System',
+                'project.desc': 'My final project at Politeknik Negeri Medan. A conveyor carries colored cubes past two color sensors, and the PLC drives pneumatic cylinders that push each cube into its own lane. Built as a training unit for industrial automation classes.',
+                'project.spec1.title': 'Controller', 'project.spec1.desc': 'Omron CP1E-N40DR-D PLC, programmed in ladder diagram with CX-Programmer',
+                'project.spec2.title': 'Actuation', 'project.spec2.desc': 'Two AIRTAC 5/2 double-coil solenoid valves and two MAL 16×50 double-acting cylinders',
+                'project.spec3.title': 'Air Supply', 'project.spec3.desc': 'Zehn oil-less compressor with FRL unit and air flow controls',
+                'project.spec4.title': 'Sensing', 'project.spec4.desc': 'TCS3200 color sensors read by Arduino Uno, signaling PLC through relays',
+                'project.spec5.title': 'Interface', 'project.spec5.desc': 'Omron NB7W-TW00B HMI, pilot lamps and push buttons on panel door',
+                'project.r1': 'PLC Output Tests Passed', 'project.r2': 'Correct Sorting',
+                'project.r3': 'Thrust Force (5.8 bar)', 'project.r4': 'Success Rate',
+                'gallery.title': 'Project Gallery',
+                'gallery.p1.title': 'Control Panel - Front View', 'gallery.p1.desc': 'Omron NB7W-TW00B HMI, pilot lamps, and operation buttons',
+                'gallery.p2.title': 'Control Panel - Inside View', 'gallery.p2.desc': 'Omron PLC, power supply, Arduino, relays, and terminal blocks',
+                'gallery.p3.title': 'Pneumatic Panel', 'gallery.p3.desc': 'FRL unit, AIRTAC solenoid valves, and blue pneumatic hoses',
+                'gallery.p4.title': 'Conveyor Belt System', 'gallery.p4.desc': 'Conveyor with TCS3200 sensors, proximity sensor, and pneumatic cylinders',
+                'gallery.p5.title': 'Building Process', 'gallery.p5.desc': 'Aluminum profile frame assembly with the team',
+                'gallery.p7.title': 'Final Project Defense', 'gallery.p7.desc': 'Presenting the final project in front of the examination board at Politeknik Negeri Medan',
+                'otherProjects.title': 'Other Projects',
+                'op1.title': 'Water Tower Quality Detector', 'op1.desc': 'Water quality monitoring system using turbidity and clarity sensors, with automatic warning indicators.',
+                'op2.title': 'Pneumatic System Trainer', 'op2.desc': 'Complete training aid with actuators, valves, and pneumatic control circuits for learning.',
+                'op3.title': 'Traffic Light Trainer', 'op3.desc': 'PLC-based 4-way and 3-way traffic light simulator with complete wiring diagrams.',
+                'exp.label': 'Experience', 'exp.title': 'Career Journey',
+                'exp1.title': 'Internship', 'exp1.l1': 'Designed and tested PLC-based pneumatic control system using training aids',
+                'exp1.l2': 'Programmed Omron CP1E PLC with CX-Programmer for sequential control',
+                'exp1.l3': 'Performed wiring, I/O configuration, and system troubleshooting',
+                'exp1.l4': 'Assisted with installation and wiring for three-phase motor control',
+                'exp2.title': 'Final Project', 'exp2.company': 'Politeknik Negeri Medan',
+                'exp2.l1': 'Designed and built Omron PLC-based automatic sorting system',
+                'exp2.l2': 'Integrated pneumatic system (AIRTAC 5/2 + MAL 16×50) with PLC control',
+                'exp2.l3': 'Conducted system testing with 100% success rate (10/10 tests)',
+                'exp2.l4': 'Documented results in comprehensive technical report',
+                'exp3.title': 'Development Projects', 'exp3.company': 'Politeknik Negeri Medan',
+                'exp3.l1': 'Water Quality Detection Device for Storage Tanks',
+                'exp3.l2': 'Pneumatic System Trainer Kit', 'exp3.l3': 'Traffic Light System Trainer',
+                'skills.label': 'Skills', 'skills.title': 'Technical Competencies',
+                'sk1.title': 'PLC & Automation', 'sk1.ladder': 'Ladder Diagram',
+                'sk2.title': 'Pneumatic Systems', 'sk2.v1': '5/2 Solenoid Valve',
+                'sk2.v2': 'Double-Acting Cylinder', 'sk2.v3': 'Control Circuits', 'sk2.v4': 'Pressure Regulation',
+                'sk3.title': 'Electrical Systems', 'sk3.v1': 'Panel Wiring',
+                'sk3.v2': 'Wiring Diagrams', 'sk3.v3': '3-Phase Motor Control', 'sk3.v4': 'Relay & Contactor',
+                'sk4.title': 'Others', 'sk4.v2': 'Sensors', 'sk4.v4': 'Trainer Design',
+                'edu.label': 'Education & Certification', 'edu.title': 'Background',
+                'edu1.title': 'Associate Degree in Electrical Engineering',
+                'edu1.desc': 'Concentration: Electronics<br>GPA: 3.24 / 4.00<br>Student ID: 2305042048',
+                'edu2.title': 'LSP Electrical Maintenance (JE) Certification',
+                'edu2.inst': 'LSP Politeknik Negeri Medan',
+                'edu2.desc': 'Declared competent in Electrical certification scheme assessment. Certificate in process of issuance.',
+                'edu3.title': 'Languages', 'edu3.inst': 'Language Proficiency', 'edu3.year': 'Active',
+                'edu3.id': 'Indonesian:', 'edu3.idLevel': 'Native (Active)',
+                'edu3.en': 'English:', 'edu3.enLevel': 'Basic (Passive)',
+                'contact.label': 'Contact', 'contact.title': 'Get In Touch',
+                'contact.heading': 'Interested in Working Together?',
+                'contact.desc': "I'm open to roles in PLC programming, electrical maintenance, and industrial automation. Don't hesitate to reach out.",
+                'contact.phone': 'Phone', 'contact.location': 'Location',
+                'form.name': 'Name', 'form.subject': 'Subject', 'form.message': 'Message', 'form.submit': 'Send Message',
+                'footer.rights': 'All Rights Reserved.'
+            }
+        };
+
+        let currentLang = 'id';
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+        }
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+
+        const skillBars = document.querySelectorAll('.skill-progress');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.style.width;
+                    entry.target.style.width = '0';
+                    setTimeout(() => { entry.target.style.width = width; }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+        skillBars.forEach(bar => skillObserver.observe(bar));
+
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            window.location.href = `mailto:micael05silaen@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+            alert(currentLang === 'id' ? 'Terima kasih! Pesan akan dikirim via email.' : 'Thank you! Message will be sent via email.');
+            e.target.reset();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
